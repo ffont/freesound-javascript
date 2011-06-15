@@ -158,6 +158,8 @@ FS.RequestCreator.setTimeout = function(tOut){
 FS.RequestCreator.setUseJson = function(json){
 	if(json == true){ 
 		FS.RequestCreator.useJson = true;
+	}else{
+		FS.RequestCreator.useJson = false;
 	};
 }
 
@@ -203,7 +205,7 @@ FS.RequestCreator.createGetReq = function(uri, succesCallback, errorCallback, pa
 	}; 
 	
 	//check with wich type of json the request needs to be made
-	if(FS.RequestCreator.useJson){
+	if(FS.RequestCreator.useJson == true){
 		//send a json XMLHttpRequest 
 		$.ajax({
 			url: uri,
@@ -220,7 +222,8 @@ FS.RequestCreator.createGetReq = function(uri, succesCallback, errorCallback, pa
 			url: uri,
 			dataType: 'jsonp',
 			data: dataParams,
-			success: newErrorCallback,
+			success: succesCallback,
+			//error: newErrorCallback,
 			type: 'GET'
 		});
 	}
@@ -516,7 +519,15 @@ FS.SoundCollection.getSimilarSoundsFromSound = function(sId, num_results, preset
 	}, errorCallback, params);
 }
 
-				   
+
+/**
+ * Gets the following page of a sound collection (search results, user sounds, pack sounds...)
+ * @static 
+ * @param {function} succesCallback Will be called when the request succeeds.
+ * @param {function} errorCallback Will be called when the request fails
+ * (no XMLHttpRequest and specified error passed to errorCallback with use of jsonp)
+ */
+
 FS.SoundCollection.prototype.next =  function(succesCallback, errorCallback){
 
 	if (this.properties['next']){
@@ -537,6 +548,14 @@ FS.SoundCollection.prototype.next =  function(succesCallback, errorCallback){
 	}else{ throw new SyntaxError("Pager does not contain next page, not loaded or no more pages available.")};
 	
 }
+
+/**
+ * Gets the previous page of a sound collection (search results, user sounds, pack sounds...)
+ * @static 
+ * @param {function} succesCallback Will be called when the request succeeds.
+ * @param {function} errorCallback Will be called when the request fails
+ * (no XMLHttpRequest and specified error passed to errorCallback with use of jsonp)
+ */
 
 FS.SoundCollection.prototype.previous =  function(succesCallback, errorCallback){
 	
@@ -686,7 +705,7 @@ Freesound = function(aKey, useJson){
 		if (aKey) {
 			
 			//set use of json
-			FS.RequestCreator.setUseJson(true, useJson);
+			FS.RequestCreator.setUseJson(useJson);
 				
 			//set api key
 			FS.FreesoundData.setApiKey(aKey); 
