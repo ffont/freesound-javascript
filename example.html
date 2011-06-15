@@ -32,10 +32,10 @@
 					"<br>freesound base uri = " + freesound.getBaseUri()
 				);
 				
-				search()
+				//search()
 				soundInfo()
-				userInfo()
-				packInfo()
+				//userInfo()
+				//packInfo()
 
 			}
 			});
@@ -52,8 +52,8 @@
 				snd = new Audio(sound.properties['preview-hq-mp3']);
 				$("#respSound").append('<br><button onclick="snd.play()">play</button><button onclick="snd.pause()">pause</button>')				
 
-				sound.getAnalysis(0,"",displaySoundAnalysisInfo );
-				sound.getSimilarSounds(10,"lowlevel",displaySimilarSounds);
+				//sound.getAnalysis(0,"",displaySoundAnalysisInfo );
+				//sound.getSimilarSounds(10,"lowlevel",displaySimilarSounds);
 			}
 			
 			function displaySoundAnalysisInfo(analysis) {
@@ -141,7 +141,25 @@
  				
  			}
  				
+ 			function errorSound(status_code, type, explanation){
+ 				$("#respSound").text("");
+ 				$("#respSound").append("<br>Error: " + status_code + " (" + type + ")<br>" + explanation );
+ 			}
  			
+ 			function errorUser(status_code, type, explanation){
+ 				$("#respUser").text("");
+ 				$("#respUser").append("<br>Error: " + status_code + " (" + type + ")<br>" + explanation );
+ 			}
+ 			
+ 			function errorSearch(status_code, type, explanation){
+ 				$("#respSearch").text("");
+ 				$("#respSearch").append("<br>Error: " + status_code + " (" + type + ")<br>" + explanation );
+ 			}
+ 			
+ 			function errorPack(status_code, type, explanation){
+ 				$("#respPack").text("");
+ 				$("#respPack").append("<br>Error: " + status_code + " (" + type + ")<br>" + explanation );
+ 			}
 			
 			function search() {
  				var q = document.getElementById('query').value;
@@ -150,28 +168,28 @@
 				var s = "";
 				$("#respSearch").text("");
 				$("#respSearch").append("<br>Searching: " + q);
-				freesound.getSoundsFromQuery(q,p,f,s,displaySearchResults )
+				freesound.getSoundsFromQuery(q,p,f,s,displaySearchResults, errorSearch);
 			}
 			
 			function soundInfo() {
 				var sId = document.getElementById('sid').value;
 				$("#respSound").text("");
 				$("#respSound").append("<br>Requesting sound with id: " + sId);
-				freesound.getSound(sId, displaySoundInfo );
+				freesound.getSound(sId, displaySoundInfo, errorSound );
 			}
 			
 			function userInfo() {
 				var uName = document.getElementById('uname').value;
 				$("#respUser").text("");
 				$("#respUser").append("<br>Requesting user with name: " + uName);
-				freesound.getUser(uName, displayUserInfo );
+				freesound.getUser(uName, displayUserInfo, errorUser  );
 			}
 			
 			function packInfo() {
 				var pId = document.getElementById('pid').value;
 				$("#respPack").text("");
 				$("#respPack").append("<br>Requesting pack with id: " + pId);
-				freesound.getPack(pId, displayPackInfo );
+				freesound.getPack(pId, displayPackInfo, errorPack  );
 			}
 			
 		</script>

@@ -169,9 +169,8 @@ FS.RequestCreator.setUseJson = function(json){
  * @param {object} errorThrown Optional exception object.
  */
 FS.RequestCreator.standardErrorMethod = function(XMLHttpRequest, textStatus, errorThrown){	
-	//TODO: handle error correctly (log?)
-	//$("#resp").append("<br>Standard error: " + textStatus + " | " + errorThrown)
-	throw new Error("RequestCreator error, request didn't succeed. " + errorThrown);
+	var errorProps = eval('(' + XMLHttpRequest.responseText + ')');
+	throw new Error("RequestCreator error, request didn't succeed. " + errorProps['explanation']);
 };
 
 /**
@@ -184,8 +183,6 @@ FS.RequestCreator.standardErrorMethod = function(XMLHttpRequest, textStatus, err
  * @param {array} params Contains the parameters as String that need to be send with the request.
  */
 FS.RequestCreator.createGetReq = function(uri, succesCallback, errorCallback, params){	
-	//TODO: log?
-
 	//get api key, needed to create a request	
 	var aKey = FS.FreesoundData.getApiKey();
 	//create parameter object, with api key and passed paramameters
@@ -194,17 +191,17 @@ FS.RequestCreator.createGetReq = function(uri, succesCallback, errorCallback, pa
 	if (params) { $.extend(dataParams, params); };
 	//check if errorCallback is a function, 
 	//if not -> use standard error method, else combine standard errorCallback with passed errorcallback
+		
 	if(!$.isFunction(errorCallback)){	
-		var errorCallback = FS.RequestCreator.standardErrorMethod;
+		var newErrorCallback = FS.RequestCreator.standardErrorMethod;
 	} else {
-		var errorCallback = function(XMLHttpRequest, textStatus, errorThrown){
-			FS.RequestCreator.standardErrorMethod(XMLHttpRequest, textStatus, errorThrown);
-			errorCallback(XMLHttpRequest, textStatus, errorThrown);
+		var newErrorCallback = function(XMLHttpRequest, textStatus, errorThrown){
+			//FS.RequestCreator.standardErrorMethod(XMLHttpRequest, textStatus, errorThrown);
+			var errorProps = eval('(' + XMLHttpRequest.responseText + ')');
+			errorCallback(errorProps['status_code'], errorProps['type'], errorProps['explanation']);
 		};
 	}; 
 	
-	
-	//$("#resp").append("<br>Req: " + uri);
 	//check with wich type of json the request needs to be made
 	if(FS.RequestCreator.useJson){
 		//send a json XMLHttpRequest 
@@ -213,7 +210,7 @@ FS.RequestCreator.createGetReq = function(uri, succesCallback, errorCallback, pa
 			dataType: 'json',
 			data: dataParams,
 			success: succesCallback,
-			error: errorCallback,
+			error: newErrorCallback,
 			type: 'GET'
 		});
 		
@@ -223,7 +220,7 @@ FS.RequestCreator.createGetReq = function(uri, succesCallback, errorCallback, pa
 			url: uri,
 			dataType: 'jsonp',
 			data: dataParams,
-			success: succesCallback,
+			success: newErrorCallback,
 			type: 'GET'
 		});
 	}
