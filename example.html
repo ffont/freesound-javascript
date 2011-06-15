@@ -12,11 +12,12 @@
 		<script type="text/javascript">
 			
 			var freesound;
-			
+		
 			$(document).ready(function(){
 			
-			loadSettings();	
-
+			apiKey = settings.apiKey;	
+			//console.debug("key: " + apiKey);
+			
 			if(apiKey == "")
 			{
 				$("#resp").append("<br>please enter an apiKey in settings_local.json");
@@ -126,7 +127,7 @@
  			
  			function displaySearchResults(soundCollection) {
  				
- 				var sc = soundCollection;
+ 				$("#respSearch").text("");
  				$("#respSearch").append("<br><br>Search Results<br>**************");
   				$("#respSearch").append("<br>* number of results: " + soundCollection.properties['num_results']);
  				$("#respSearch").append("<br>* number of pages: " + soundCollection.properties['num_pages']);
@@ -135,7 +136,8 @@
  					$("#respSearch").append("<br>--- " + obj + ": " + soundCollection.properties['sounds'][obj]['id'] + " - " + soundCollection.properties['sounds'][obj]['original_filename']);
  				}
  			
- 				//$("#respSearch").append('<br><br><button onclick="sc.previous(displaySearchResults);">previous</button><button onclick="soundCollection.next(displaySearchResults);">next</button>')
+ 				sc = soundCollection;
+ 				$("#respSearch").append('<br><br><button onclick="sc.previous(displaySearchResults);">previous</button><button onclick="sc.next(displaySearchResults);">next</button>')
  				
  			}
  				
