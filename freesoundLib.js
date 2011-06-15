@@ -8,6 +8,9 @@
  * @author frederic font, strongly based on canoris-javascript by ciskavriezenga (http://github.com/canoris/canoris-javascript)
  */
 
+/**
+ * @class FS is the namespace of the freesound-javascript library 
+ */
 var FS = new function()
 {
 		
@@ -695,7 +698,7 @@ FS.Pack.prototype.getSounds = function(succesCallback, errorCallback){
  * @class Freesound class is the API of the Freesound Javascript Library
  * @constructor
  * @param {String} aKey Contains the api key that is going to be used.
- * @returns {Object} { sound }. 
+ * @returns {Object} { sound, user, pack, soundCollection }. 
  */
 Freesound = function(aKey, useJson){
 	
