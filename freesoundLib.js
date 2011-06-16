@@ -14,15 +14,16 @@
 var FS = new function()
 {
 		
-	this._URI_SOUND = '/sounds/<sound_id>';
-	this._URI_SOUND_ANALYSIS = '/sounds/<sound_id>/analysis/<filter>';
-	this._URI_SIMILAR_SOUNDS = '/sounds/<sound_id>/similar';
-	this._URI_SEARCH = '/sounds/search';
-	this._URI_USER = '/people/<user_name>';
-	this._URI_USER_SOUNDS = '/people/<user_name>/sounds';
-	this._URI_USER_PACKS = '/people/<user_name>/packs';
-	this._URI_PACK = '/packs/<pack_id>';
-	this._URI_PACK_SOUNDS = '/packs/<pack_id>/sounds';
+	this._URI_SOUND = '/sounds/<sound_id>/';
+	this._URI_SOUND_ANALYSIS = '/sounds/<sound_id>/analysis/<filter>/';
+	this._URI_SOUND_ANALYSIS_NO_FILTER = '/sounds/<sound_id>/analysis/<filter>';
+	this._URI_SIMILAR_SOUNDS = '/sounds/<sound_id>/similar/';
+	this._URI_SEARCH = '/sounds/search/';
+	this._URI_USER = '/people/<user_name>/';
+	this._URI_USER_SOUNDS = '/people/<user_name>/sounds/';
+	this._URI_USER_PACKS = '/people/<user_name>/packs/';
+	this._URI_PACK = '/packs/<pack_id>/';
+	this._URI_PACK_SOUNDS = '/packs/<pack_id>/sounds/';
 	
  	/**
  	 * Method to create uri for request. 
@@ -360,11 +361,14 @@ FS.Sound.prototype.getAnalysis = function(showAll, filter, succesCallback, error
 	//place showAll in object and save to params variable for request	
 	var params = {all: showAll};
 	
-	var uri = FS._URI_SOUND_ANALYSIS;
-	
 	//if filter is undefined -> set to array with one empty string
 	if (!filter) { 	filter = [""];}
 	
+	if (filter == ""){
+		var uri = FS._URI_SOUND_ANALYSIS_NO_FILTER;
+	}else{
+		var uri = FS._URI_SOUND_ANALYSIS;
+	}
 	
 	//create request
 	FS.RequestCreator.createGetReq(
@@ -627,8 +631,6 @@ FS.User.prototype.getSounds = function(succesCallback, errorCallback){
 FS.User.prototype.getPacks = function(succesCallback, errorCallback){	
 	
 	var uName = this.properties['username'];
-	$("#resp").append(FS._uri(FS._URI_USER_PACKS, [uName]));
-	
 	
 	//call createGetReq and pass it file uri, file key and callback function
 	FS.RequestCreator.createGetReq(FS._uri(FS._URI_USER_PACKS, [uName]), 
