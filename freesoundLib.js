@@ -13,67 +13,67 @@
  */
 var FS = new function()
 {
-		
-	this._URI_SOUND = '/sounds/<sound_id>/';
-	this._URI_SOUND_ANALYSIS = '/sounds/<sound_id>/analysis/<filter>/';
-	this._URI_SOUND_ANALYSIS_NO_FILTER = '/sounds/<sound_id>/analysis/<filter>';
-	this._URI_SIMILAR_SOUNDS = '/sounds/<sound_id>/similar/';
-	this._URI_SEARCH = '/sounds/search/';
-	this._URI_USER = '/people/<user_name>/';
-	this._URI_USER_SOUNDS = '/people/<user_name>/sounds/';
-	this._URI_USER_PACKS = '/people/<user_name>/packs/';
-	this._URI_PACK = '/packs/<pack_id>/';
-	this._URI_PACK_SOUNDS = '/packs/<pack_id>/sounds/';
-	
- 	/**
- 	 * Method to create uri for request. 
- 	 * @param {string} uri Contains the standerd string for request. 
- 	 * @param {array} args Contains the arguments that needs to be placed in standard string.
- 	 * @returns {string} uri Contains the total uri for the request.
- 	 */
-	this._uri = function(uri, args){
-		for (a in args) {
-			uri = uri.replace(/<[\w_]+>/, args[a]);
-		};
-		uri = FS.FreesoundData.getBaseUri() + uri;
-		return uri;
-	};
-	
-	/**
-	 * Method to split reference uri in uri and paramters
-	 * @param {string} uri Contains the uri to split in uri and parameters 
-	 */
-	this._splitUri = function(uri)
-	{
-		//test uri for ? -> contains parameters
-		if(/\?/.test(uri)){
-			//split up uri
-			var splittedUri = uri.split(/\?/);
-			//save baseUri
-			var baseUri = splittedUri[0];
-			//save parameters
-			var parameters = splittedUri[1];
-			//test params for & -> contains more then one parameter
-			if(/\&/.test(parameters)){	
-				//split parameters
-				var params =  parameters.split(/\&/); 
-			}
-			//else safe single parameter in array to be able to create parameter object
-			else{var params = [parameters]; };
-			//create object to place parameters in
-			var parametersObject = {}; 
-			//split up parameters strings and place in object
-			for( a in params)
-			{	
-				var param = params[a].split(/\=/);
-				eval("parametersObject."+ param[0] + "=\"" + param[1] + "\"");
-			}
-			//return array with baseUri and paramtersObject
-			return [baseUri, parametersObject];
-		} else{
-			return [uri, false];	
-		}
-	}
+                
+        this._URI_SOUND = '/sounds/<sound_id>/';
+        this._URI_SOUND_ANALYSIS = '/sounds/<sound_id>/analysis/<filter>/';
+        this._URI_SOUND_ANALYSIS_NO_FILTER = '/sounds/<sound_id>/analysis/<filter>';
+        this._URI_SIMILAR_SOUNDS = '/sounds/<sound_id>/similar/';
+        this._URI_SEARCH = '/sounds/search/';
+        this._URI_USER = '/people/<user_name>/';
+        this._URI_USER_SOUNDS = '/people/<user_name>/sounds/';
+        this._URI_USER_PACKS = '/people/<user_name>/packs/';
+        this._URI_PACK = '/packs/<pack_id>/';
+        this._URI_PACK_SOUNDS = '/packs/<pack_id>/sounds/';
+        
+        /**
+         * Method to create uri for request. 
+         * @param {string} uri Contains the standerd string for request. 
+         * @param {array} args Contains the arguments that needs to be placed in standard string.
+         * @returns {string} uri Contains the total uri for the request.
+         */
+        this._uri = function(uri, args){
+                for (a in args) {
+                        uri = uri.replace(/<[\w_]+>/, args[a]);
+                };
+                uri = FS.FreesoundData.getBaseUri() + uri;
+                return uri;
+        };
+        
+        /**
+         * Method to split reference uri in uri and paramters
+         * @param {string} uri Contains the uri to split in uri and parameters 
+         */
+        this._splitUri = function(uri)
+        {
+                //test uri for ? -> contains parameters
+                if(/\?/.test(uri)){
+                        //split up uri
+                        var splittedUri = uri.split(/\?/);
+                        //save baseUri
+                        var baseUri = splittedUri[0];
+                        //save parameters
+                        var parameters = splittedUri[1];
+                        //test params for & -> contains more then one parameter
+                        if(/\&/.test(parameters)){      
+                                //split parameters
+                                var params =  parameters.split(/\&/); 
+                        }
+                        //else safe single parameter in array to be able to create parameter object
+                        else{var params = [parameters]; };
+                        //create object to place parameters in
+                        var parametersObject = {}; 
+                        //split up parameters strings and place in object
+                        for( a in params)
+                        {       
+                                var param = params[a].split(/\=/);
+                                eval("parametersObject."+ param[0] + "=\"" + param[1] + "\"");
+                        }
+                        //return array with baseUri and paramtersObject
+                        return [baseUri, parametersObject];
+                } else{
+                        return [uri, false];    
+                }
+        }
 }
 
 
@@ -98,7 +98,7 @@ FS.FreesoundData.baseUri = 'http://tabasco.upf.edu/api'; //'http://localhost:800
  * @param {string} aKey Contains the api key that is going to be used.
  */
 FS.FreesoundData.setApiKey = function(aKey){
-	FS.FreesoundData.apiKey = aKey;	
+        FS.FreesoundData.apiKey = aKey; 
 };
 
 /**
@@ -107,8 +107,8 @@ FS.FreesoundData.setApiKey = function(aKey){
  * @returns {string} apiKey Contains the used api key.
  */
 FS.FreesoundData.getApiKey = function(){
-	if(FS.FreesoundData.apiKey){ return FS.FreesoundData.apiKey; }
-	else {throw ("Api key is not loaded.")}; 
+        if(FS.FreesoundData.apiKey){ return FS.FreesoundData.apiKey; }
+        else {throw ("Api key is not loaded.")}; 
 };
 
 /**
@@ -117,7 +117,7 @@ FS.FreesoundData.getApiKey = function(){
  * @param {string} bUri Contains the base uri that is going to be used.
  */
 FS.FreesoundData.setBaseUri = function(bUri){
-	FS.FreesoundData.baseUri = bUri;
+        FS.FreesoundData.baseUri = bUri;
 };
 
 /**
@@ -126,7 +126,7 @@ FS.FreesoundData.setBaseUri = function(bUri){
  * @returns {string} baseUri Contains the base uri that is used.
  */
 FS.FreesoundData.getBaseUri = function(){
-	return FS.FreesoundData.baseUri;
+        return FS.FreesoundData.baseUri;
 };
 
 
@@ -151,7 +151,7 @@ FS.RequestCreator.useJson = false;
  * @param {Number} tOut Used for jsonp requests timeout time.
  */
 FS.RequestCreator.setTimeout = function(tOut){
-	if(!isNaN(tOut)){ FS.RequestCreator.timeout = tOut; };
+        if(!isNaN(tOut)){ FS.RequestCreator.timeout = tOut; };
 }
 
 /**
@@ -160,11 +160,11 @@ FS.RequestCreator.setTimeout = function(tOut){
  * @param {boolean} json
 */
 FS.RequestCreator.setUseJson = function(json){
-	if(json == true){ 
-		FS.RequestCreator.useJson = true;
-	}else{
-		FS.RequestCreator.useJson = false;
-	};
+        if(json == true){ 
+                FS.RequestCreator.useJson = true;
+        }else{
+                FS.RequestCreator.useJson = false;
+        };
 }
 
 /**
@@ -174,9 +174,9 @@ FS.RequestCreator.setUseJson = function(json){
  * @param {string} textStatus Describes the type of error that occurred.
  * @param {object} errorThrown Optional exception object.
  */
-FS.RequestCreator.standardErrorMethod = function(XMLHttpRequest, textStatus, errorThrown){	
-	var errorProps = eval('(' + XMLHttpRequest.responseText + ')');
-	throw new Error("RequestCreator error, request didn't succeed. " + errorProps['explanation']);
+FS.RequestCreator.standardErrorMethod = function(XMLHttpRequest, textStatus, errorThrown){      
+        var errorProps = eval('(' + XMLHttpRequest.responseText + ')');
+        throw new Error("RequestCreator error, request didn't succeed. " + errorProps['explanation']);
 };
 
 /**
@@ -188,50 +188,50 @@ FS.RequestCreator.standardErrorMethod = function(XMLHttpRequest, textStatus, err
  * (no XMLHttpRequest and specified error passed to errorCallback with use of jsonp)
  * @param {array} params Contains the parameters as String that need to be send with the request.
  */
-FS.RequestCreator.createGetReq = function(uri, succesCallback, errorCallback, params){	
-	//get api key, needed to create a request	
-	var aKey = FS.FreesoundData.getApiKey();
-	//create parameter object, with api key and passed paramameters
-	var dataParams = {api_key: aKey};
-	//if params are passed, extend dataParams with params
-	if (params) { $.extend(dataParams, params); };
-	//check if errorCallback is a function, 
-	//if not -> use standard error method, else combine standard errorCallback with passed errorcallback
-		
-	if(!$.isFunction(errorCallback)){	
-		var newErrorCallback = FS.RequestCreator.standardErrorMethod;
-	} else {
-		var newErrorCallback = function(XMLHttpRequest, textStatus, errorThrown){
-			//FS.RequestCreator.standardErrorMethod(XMLHttpRequest, textStatus, errorThrown);
-			var errorProps = eval('(' + XMLHttpRequest.responseText + ')');
-			errorCallback(errorProps['status_code'], errorProps['type'], errorProps['explanation']);
-		};
-	}; 
-	
-	//check with wich type of json the request needs to be made
-	if(FS.RequestCreator.useJson == true){
-		//send a json XMLHttpRequest 
-		$.ajax({
-			url: uri,
-			dataType: 'json',
-			data: dataParams,
-			success: succesCallback,
-			error: newErrorCallback,
-			type: 'GET'
-		});
-		
-	} else{
-		
-		$.ajax({
-			url: uri,
-			dataType: 'jsonp',
-			data: dataParams,
-			success: succesCallback,
-			//error: newErrorCallback,
-			type: 'GET'
-		});
-	}
-}	
+FS.RequestCreator.createGetReq = function(uri, succesCallback, errorCallback, params){  
+        //get api key, needed to create a request       
+        var aKey = FS.FreesoundData.getApiKey();
+        //create parameter object, with api key and passed paramameters
+        var dataParams = {api_key: aKey};
+        //if params are passed, extend dataParams with params
+        if (params) { $.extend(dataParams, params); };
+        //check if errorCallback is a function, 
+        //if not -> use standard error method, else combine standard errorCallback with passed errorcallback
+                
+        if(!$.isFunction(errorCallback)){       
+                var newErrorCallback = FS.RequestCreator.standardErrorMethod;
+        } else {
+                var newErrorCallback = function(XMLHttpRequest, textStatus, errorThrown){
+                        //FS.RequestCreator.standardErrorMethod(XMLHttpRequest, textStatus, errorThrown);
+                        var errorProps = eval('(' + XMLHttpRequest.responseText + ')');
+                        errorCallback(errorProps['status_code'], errorProps['type'], errorProps['explanation']);
+                };
+        }; 
+        
+        //check with wich type of json the request needs to be made
+        if(FS.RequestCreator.useJson == true){
+                //send a json XMLHttpRequest 
+                $.ajax({
+                        url: uri,
+                        dataType: 'json',
+                        data: dataParams,
+                        success: succesCallback,
+                        error: newErrorCallback,
+                        type: 'GET'
+                });
+                
+        } else{
+                
+                $.ajax({
+                        url: uri,
+                        dataType: 'jsonp',
+                        data: dataParams,
+                        success: succesCallback,
+                        //error: newErrorCallback,
+                        type: 'GET'
+                });
+        }
+}       
 
 
 /*======================================================================*/
@@ -243,12 +243,12 @@ FS.RequestCreator.createGetReq = function(uri, succesCallback, errorCallback, pa
  * @param {object} inProperties Contains the properties of the FreesoundObject
  */
 FS.FreesoundObject = function(inProperties){
-	this.object = this;
-	this.loaded = true;
-	
-	//save properties in properties variable
-	if (inProperties) { this.properties = inProperties;	}
-	else {throw new Error("No properties passed to constructor of FreesoundObject.")};
+        this.object = this;
+        this.loaded = true;
+        
+        //save properties in properties variable
+        if (inProperties) { this.properties = inProperties;     }
+        else {throw new Error("No properties passed to constructor of FreesoundObject.")};
 };
 
 /**
@@ -257,18 +257,18 @@ FS.FreesoundObject = function(inProperties){
  * @returns {object/string} item 
  */
 FS.FreesoundObject.prototype.getItem = function(item){
-	//check if FreesoundObject object properties are loaded
-	if(this.loaded){
-		var myString =  "this.properties." + item;
-		//check if propertie asked for exists
-		if (eval(myString)) {
-			return eval(myString);
-		}
-		//propertie doesn't exist, throw error
-		else{throw new SyntaxError( item + " does not exist in " + this)}
-	}
-	//properties aren't loaded, throw error
-	else {throw new Error("Properties of " + this + " are not loaded.")};
+        //check if FreesoundObject object properties are loaded
+        if(this.loaded){
+                var myString =  "this.properties." + item;
+                //check if propertie asked for exists
+                if (eval(myString)) {
+                        return eval(myString);
+                }
+                //propertie doesn't exist, throw error
+                else{throw new SyntaxError( item + " does not exist in " + this)}
+        }
+        //properties aren't loaded, throw error
+        else {throw new Error("Properties of " + this + " are not loaded.")};
 }
 
 /**
@@ -276,7 +276,7 @@ FS.FreesoundObject.prototype.getItem = function(item){
  * @returns {string} key of FreesoundObject
  */
 FS.FreesoundObject.prototype.key = function(){
-	return this.properties.key;
+        return this.properties.key;
 }
 
 /**
@@ -285,24 +285,24 @@ FS.FreesoundObject.prototype.key = function(){
  * @param {fucntion} errorCallback Will be called when the request fails (no XMLHttpRequest passed and specified error with use of jsonp).
  */
 FS.FreesoundObject.prototype.update = function(succesCallback, errorCallback){
-	if(this.properties.ref)
-	{
-		//split uri into uri and parameters object
-		var uriAndParams = FS._splitUri(this.properties.ref);
-		//save this (sound, collection, pager, that is calling the update method) inside var object	
-		var object = this;
-		//create clossure around object, with which properties can be set 
-		//and return object, to be able to pass it to callback method		
-		var setProps = new function(props){
-		return function(props){ object.properties = props; return object} }
-		
-		//call createGetReq method, use above setProps method in callback method to be able to save properties
-		FS.RequestCreator.createGetReq(uriAndParams[0], function(inProperties){
-			var obj = setProps(inProperties);
-			if($.isFunction(succesCallback)){succesCallback(obj); };
-		}, errorCallback, uriAndParams[1]);	
-		this.properties = false; 	
-	}else{ throw new Error("properties of object does not exist, unable to update because no ref. is present");};
+        if(this.properties.ref)
+        {
+                //split uri into uri and parameters object
+                var uriAndParams = FS._splitUri(this.properties.ref);
+                //save this (sound, collection, pager, that is calling the update method) inside var object     
+                var object = this;
+                //create clossure around object, with which properties can be set 
+                //and return object, to be able to pass it to callback method           
+                var setProps = new function(props){
+                return function(props){ object.properties = props; return object} }
+                
+                //call createGetReq method, use above setProps method in callback method to be able to save properties
+                FS.RequestCreator.createGetReq(uriAndParams[0], function(inProperties){
+                        var obj = setProps(inProperties);
+                        if($.isFunction(succesCallback)){succesCallback(obj); };
+                }, errorCallback, uriAndParams[1]);     
+                this.properties = false;        
+        }else{ throw new Error("properties of object does not exist, unable to update because no ref. is present");};
 }
 
 
@@ -326,24 +326,24 @@ FS.Sound = function(){this.object = this;};
  */
 
 FS.Sound.getSound = function(sId, succesCallback, errorCallback){
-	
-	//call createGetReq and pass it file uri, file key and callback function
-	FS.RequestCreator.createGetReq(FS._uri(FS._URI_SOUND, [sId]), 
-	function(inProperties)
-	{
-				
-		//create a new File object and a new FreesoundObject 
-		var newSound = new FS.Sound();
-		var newFreesoundObject = new FS.FreesoundObject(inProperties);
-		//use jQuery.extend to let newSound inherited from newFreesoundObject
-		$.extend(newSound, newFreesoundObject);	
-		
-		//save newFile, by using passed clossures 
-		//saveFile(newSound);
-		
-		//call succesCallback method	
-		if($.isFunction(succesCallback)){succesCallback(newSound); };
-	}, errorCallback);
+        
+        //call createGetReq and pass it file uri, file key and callback function
+        FS.RequestCreator.createGetReq(FS._uri(FS._URI_SOUND, [sId]), 
+        function(inProperties)
+        {
+                                
+                //create a new File object and a new FreesoundObject 
+                var newSound = new FS.Sound();
+                var newFreesoundObject = new FS.FreesoundObject(inProperties);
+                //use jQuery.extend to let newSound inherited from newFreesoundObject
+                $.extend(newSound, newFreesoundObject); 
+                
+                //save newFile, by using passed clossures 
+                //saveFile(newSound);
+                
+                //call succesCallback method    
+                if($.isFunction(succesCallback)){succesCallback(newSound); };
+        }, errorCallback);
 }
 
 /**
@@ -355,32 +355,32 @@ FS.Sound.getSound = function(sId, succesCallback, errorCallback){
  * (no XMLHttpRequest and specified error passed to errorCallback with use of jsonp)
  */
 FS.Sound.prototype.getAnalysis = function(showAll, filter, succesCallback, errorCallback){
-	
-	//if showAll is undefined -> set to 0
-	if (!showAll) { showAll = 0;};
-	//place showAll in object and save to params variable for request	
-	var params = {all: showAll};
-	
-	//if filter is undefined -> set to array with one empty string
-	if (!filter) { 	filter = [""];}
-	
-	if (filter == ""){
-		var uri = FS._URI_SOUND_ANALYSIS_NO_FILTER;
-	}else{
-		var uri = FS._URI_SOUND_ANALYSIS;
-	}
-	
-	//create request
-	FS.RequestCreator.createGetReq(
-		FS._uri(uri, [this.properties['id'], filter]), 
-		function(analysis){ 
-			succesCallback(analysis)
-		}, errorCallback, params
-	);
+        
+        //if showAll is undefined -> set to 0
+        if (!showAll) { showAll = 0;};
+        //place showAll in object and save to params variable for request       
+        var params = {all: showAll};
+        
+        //if filter is undefined -> set to array with one empty string
+        if (!filter) {  filter = [""];}
+        
+        if (filter == ""){
+                var uri = FS._URI_SOUND_ANALYSIS_NO_FILTER;
+        }else{
+                var uri = FS._URI_SOUND_ANALYSIS;
+        }
+        
+        //create request
+        FS.RequestCreator.createGetReq(
+                FS._uri(uri, [this.properties['id'], filter]), 
+                function(analysis){ 
+                        succesCallback(analysis)
+                }, errorCallback, params
+        );
 }
 
-FS.Sound.prototype.getSimilarSounds = function(num_results, preset, succesCallback, errorCallback){	
-	FS.SoundCollection.getSimilarSoundsFromSound(this.properties['id'], num_results, preset, succesCallback, errorCallback)
+FS.Sound.prototype.getSimilarSounds = function(num_results, preset, succesCallback, errorCallback){     
+        FS.SoundCollection.getSimilarSoundsFromSound(this.properties['id'], num_results, preset, succesCallback, errorCallback)
 }
 
 /*==================================================================================*/
@@ -406,34 +406,34 @@ FS.SoundCollection = function(){this.object = this;};
  */
 
 FS.SoundCollection.getSoundsFromQuery = function(query, page, filter, sort, succesCallback, errorCallback){
-	
-	if (!query) { query = "";};
-	
-	var params = {q:query};
-	if (page!=""){
-		$.extend(params, {p:page} );
-	}
-	if (filter!=""){
-		$.extend(params, {f:filter} );
-	}
-	if (sort!=""){
-		$.extend(params, {s:sort} );
-	}
-	
-	//call createGetReq and pass it file uri, file key and callback function
-	FS.RequestCreator.createGetReq(FS._uri(FS._URI_SEARCH, [""]), 
-	function(inProperties)
-	{
-				
-		//create a new File object and a new FreesoundObject 
-		var newSoundCollection = new FS.SoundCollection();
-		var newFreesoundObject = new FS.FreesoundObject(inProperties);
-		//use jQuery.extend to let newSound inherited from newFreesoundObject
-		$.extend(newSoundCollection, newFreesoundObject);	
-		
-		//call succesCallback method	
-		if($.isFunction(succesCallback)){succesCallback(newSoundCollection); };
-	}, errorCallback, params);
+        
+        if (!query) { query = "";};
+        
+        var params = {q:query};
+        if (page!=""){
+                $.extend(params, {p:page} );
+        }
+        if (filter!=""){
+                $.extend(params, {f:filter} );
+        }
+        if (sort!=""){
+                $.extend(params, {s:sort} );
+        }
+        
+        //call createGetReq and pass it file uri, file key and callback function
+        FS.RequestCreator.createGetReq(FS._uri(FS._URI_SEARCH, [""]), 
+        function(inProperties)
+        {
+                                
+                //create a new File object and a new FreesoundObject 
+                var newSoundCollection = new FS.SoundCollection();
+                var newFreesoundObject = new FS.FreesoundObject(inProperties);
+                //use jQuery.extend to let newSound inherited from newFreesoundObject
+                $.extend(newSoundCollection, newFreesoundObject);       
+                
+                //call succesCallback method    
+                if($.isFunction(succesCallback)){succesCallback(newSoundCollection); };
+        }, errorCallback, params);
 }
 
 
@@ -446,21 +446,21 @@ FS.SoundCollection.getSoundsFromQuery = function(query, page, filter, sort, succ
  * (no XMLHttpRequest and specified error passed to errorCallback with use of jsonp)
  */
 FS.SoundCollection.getSoundsFromUser = function(uName, succesCallback, errorCallback){
-	
-	//call createGetReq and pass it file uri, file key and callback function
-	FS.RequestCreator.createGetReq(FS._uri(FS._URI_USER_SOUNDS, [uName]), 
-	function(inProperties)
-	{
-				
-		//create a new File object and a new FreesoundObject 
-		var newSoundCollection = new FS.SoundCollection();
-		var newFreesoundObject = new FS.FreesoundObject(inProperties);
-		//use jQuery.extend to let newSound inherited from newFreesoundObject
-		$.extend(newSoundCollection, newFreesoundObject);	
-		
-		//call succesCallback method	
-		if($.isFunction(succesCallback)){succesCallback(newSoundCollection); };
-	}, errorCallback);
+        
+        //call createGetReq and pass it file uri, file key and callback function
+        FS.RequestCreator.createGetReq(FS._uri(FS._URI_USER_SOUNDS, [uName]), 
+        function(inProperties)
+        {
+                                
+                //create a new File object and a new FreesoundObject 
+                var newSoundCollection = new FS.SoundCollection();
+                var newFreesoundObject = new FS.FreesoundObject(inProperties);
+                //use jQuery.extend to let newSound inherited from newFreesoundObject
+                $.extend(newSoundCollection, newFreesoundObject);       
+                
+                //call succesCallback method    
+                if($.isFunction(succesCallback)){succesCallback(newSoundCollection); };
+        }, errorCallback);
 }
 
 
@@ -473,21 +473,21 @@ FS.SoundCollection.getSoundsFromUser = function(uName, succesCallback, errorCall
  * (no XMLHttpRequest and specified error passed to errorCallback with use of jsonp)
  */
 FS.SoundCollection.getSoundsFromPack = function(pId, succesCallback, errorCallback){
-	
-	//call createGetReq and pass it file uri, file key and callback function
-	FS.RequestCreator.createGetReq(FS._uri(FS._URI_PACK_SOUNDS, [pId]), 
-	function(inProperties)
-	{
-				
-		//create a new File object and a new FreesoundObject 
-		var newSoundCollection = new FS.SoundCollection();
-		var newFreesoundObject = new FS.FreesoundObject(inProperties);
-		//use jQuery.extend to let newSound inherited from newFreesoundObject
-		$.extend(newSoundCollection, newFreesoundObject);	
-		
-		//call succesCallback method	
-		if($.isFunction(succesCallback)){succesCallback(newSoundCollection); };
-	}, errorCallback);
+        
+        //call createGetReq and pass it file uri, file key and callback function
+        FS.RequestCreator.createGetReq(FS._uri(FS._URI_PACK_SOUNDS, [pId]), 
+        function(inProperties)
+        {
+                                
+                //create a new File object and a new FreesoundObject 
+                var newSoundCollection = new FS.SoundCollection();
+                var newFreesoundObject = new FS.FreesoundObject(inProperties);
+                //use jQuery.extend to let newSound inherited from newFreesoundObject
+                $.extend(newSoundCollection, newFreesoundObject);       
+                
+                //call succesCallback method    
+                if($.isFunction(succesCallback)){succesCallback(newSoundCollection); };
+        }, errorCallback);
 }
 
 
@@ -500,30 +500,30 @@ FS.SoundCollection.getSoundsFromPack = function(pId, succesCallback, errorCallba
  * @param {function} succesCallback Will be called when the request succeeds.
  * @param {function} errorCallback Will be called when the request fails
  * (no XMLHttpRequest and specified error passed to errorCallback with use of jsonp)
- */				   
+ */                                
 
 FS.SoundCollection.getSimilarSoundsFromSound = function(sId, num_results, preset, succesCallback, errorCallback){
-	
-	if (!num_results) { num_results = 15;};
-	if (!preset) { preset = "lowlevel";};
-	
-	var params = {num_results: num_results,
-				  preset: preset};
-	
-	//call createGetReq and pass it file uri, file key and callback function
-	FS.RequestCreator.createGetReq(FS._uri(FS._URI_SIMILAR_SOUNDS, [sId]), 
-	function(inProperties)
-	{
-				
-		//create a new File object and a new FreesoundObject 
-		var newSoundCollection = new FS.SoundCollection();
-		var newFreesoundObject = new FS.FreesoundObject(inProperties);
-		//use jQuery.extend to let newSound inherited from newFreesoundObject
-		$.extend(newSoundCollection, newFreesoundObject);	
-		
-		//call succesCallback method	
-		if($.isFunction(succesCallback)){succesCallback(newSoundCollection); };
-	}, errorCallback, params);
+        
+        if (!num_results) { num_results = 15;};
+        if (!preset) { preset = "lowlevel";};
+        
+        var params = {num_results: num_results,
+                                  preset: preset};
+        
+        //call createGetReq and pass it file uri, file key and callback function
+        FS.RequestCreator.createGetReq(FS._uri(FS._URI_SIMILAR_SOUNDS, [sId]), 
+        function(inProperties)
+        {
+                                
+                //create a new File object and a new FreesoundObject 
+                var newSoundCollection = new FS.SoundCollection();
+                var newFreesoundObject = new FS.FreesoundObject(inProperties);
+                //use jQuery.extend to let newSound inherited from newFreesoundObject
+                $.extend(newSoundCollection, newFreesoundObject);       
+                
+                //call succesCallback method    
+                if($.isFunction(succesCallback)){succesCallback(newSoundCollection); };
+        }, errorCallback, params);
 }
 
 
@@ -537,23 +537,23 @@ FS.SoundCollection.getSimilarSoundsFromSound = function(sId, num_results, preset
 
 FS.SoundCollection.prototype.next =  function(succesCallback, errorCallback){
 
-	if (this.properties['next']){
-		//call createGetReq and pass it file uri, file key and callback function
-		FS.RequestCreator.createGetReq(this.properties['next'], 
-		function(inProperties)
-		{
-			
-			//create a new File object and a new FreesoundObject 
-			var newSoundCollection = new FS.SoundCollection();
-			var newFreesoundObject = new FS.FreesoundObject(inProperties);
-			//use jQuery.extend to let newSound inherited from newFreesoundObject
-			$.extend(newSoundCollection, newFreesoundObject);	
-			
-			//call succesCallback method	
-			if($.isFunction(succesCallback)){succesCallback(newSoundCollection); };
-		}, errorCallback);
-	}else{ throw new SyntaxError("Pager does not contain next page, not loaded or no more pages available.")};
-	
+        if (this.properties['next']){
+                //call createGetReq and pass it file uri, file key and callback function
+                FS.RequestCreator.createGetReq(this.properties['next'], 
+                function(inProperties)
+                {
+                        
+                        //create a new File object and a new FreesoundObject 
+                        var newSoundCollection = new FS.SoundCollection();
+                        var newFreesoundObject = new FS.FreesoundObject(inProperties);
+                        //use jQuery.extend to let newSound inherited from newFreesoundObject
+                        $.extend(newSoundCollection, newFreesoundObject);       
+                        
+                        //call succesCallback method    
+                        if($.isFunction(succesCallback)){succesCallback(newSoundCollection); };
+                }, errorCallback);
+        }else{ throw new SyntaxError("Pager does not contain next page, not loaded or no more pages available.")};
+        
 }
 
 /**
@@ -565,24 +565,24 @@ FS.SoundCollection.prototype.next =  function(succesCallback, errorCallback){
  */
 
 FS.SoundCollection.prototype.previous =  function(succesCallback, errorCallback){
-	
-	if (this.properties['previous']){
-		//call createGetReq and pass it file uri, file key and callback function
-		FS.RequestCreator.createGetReq(this.properties['previous'], 
-		function(inProperties)
-		{
-					
-			//create a new File object and a new FreesoundObject 
-			var newSoundCollection = new FS.SoundCollection();
-			var newFreesoundObject = new FS.FreesoundObject(inProperties);
-			//use jQuery.extend to let newSound inherited from newFreesoundObject
-			$.extend(newSoundCollection, newFreesoundObject);	
-			
-			//call succesCallback method	
-			if($.isFunction(succesCallback)){succesCallback(newSoundCollection); };
-		}, errorCallback);
-	}else{ throw new SyntaxError("Pager does not contain previous page, not loaded or already at page 0.")};
-	
+        
+        if (this.properties['previous']){
+                //call createGetReq and pass it file uri, file key and callback function
+                FS.RequestCreator.createGetReq(this.properties['previous'], 
+                function(inProperties)
+                {
+                                        
+                        //create a new File object and a new FreesoundObject 
+                        var newSoundCollection = new FS.SoundCollection();
+                        var newFreesoundObject = new FS.FreesoundObject(inProperties);
+                        //use jQuery.extend to let newSound inherited from newFreesoundObject
+                        $.extend(newSoundCollection, newFreesoundObject);       
+                        
+                        //call succesCallback method    
+                        if($.isFunction(succesCallback)){succesCallback(newSoundCollection); };
+                }, errorCallback);
+        }else{ throw new SyntaxError("Pager does not contain previous page, not loaded or already at page 0.")};
+        
 }
 
 /*======================================================================*/
@@ -605,45 +605,45 @@ FS.User = function(){this.object = this;};
  */
 
 FS.User.getUser = function(uName, succesCallback, errorCallback){
-	
-	//call createGetReq and pass it file uri, file key and callback function
-	FS.RequestCreator.createGetReq(FS._uri(FS._URI_USER, [uName]), 
-	function(inProperties)
-	{
-				
-		//create a new File object and a new FreesoundObject 
-		var newUser = new FS.User();
-		var newFreesoundObject = new FS.FreesoundObject(inProperties);
-		//use jQuery.extend to let newSound inherited from newFreesoundObject
-		$.extend(newUser, newFreesoundObject);	
-		
-		//call succesCallback method	
-		if($.isFunction(succesCallback)){succesCallback(newUser); };
-	}, errorCallback);
+        
+        //call createGetReq and pass it file uri, file key and callback function
+        FS.RequestCreator.createGetReq(FS._uri(FS._URI_USER, [uName]), 
+        function(inProperties)
+        {
+                                
+                //create a new File object and a new FreesoundObject 
+                var newUser = new FS.User();
+                var newFreesoundObject = new FS.FreesoundObject(inProperties);
+                //use jQuery.extend to let newSound inherited from newFreesoundObject
+                $.extend(newUser, newFreesoundObject);  
+                
+                //call succesCallback method    
+                if($.isFunction(succesCallback)){succesCallback(newUser); };
+        }, errorCallback);
 
 }
 
-FS.User.prototype.getSounds = function(succesCallback, errorCallback){	
-	FS.SoundCollection.getSoundsFromUser(this.properties['username'], succesCallback, errorCallback)
+FS.User.prototype.getSounds = function(succesCallback, errorCallback){  
+        FS.SoundCollection.getSoundsFromUser(this.properties['username'], succesCallback, errorCallback)
 }
 
 
-FS.User.prototype.getPacks = function(succesCallback, errorCallback){	
-	
-	var uName = this.properties['username'];
-	
-	//call createGetReq and pass it file uri, file key and callback function
-	FS.RequestCreator.createGetReq(FS._uri(FS._URI_USER_PACKS, [uName]), 
-	function(inProperties)
-	{
-		// Use generic FreesoundObject to handle pack list/collection
-		var newFreesoundObject = new FS.FreesoundObject(inProperties);
-		
-		//call succesCallback method	
-		if($.isFunction(succesCallback)){succesCallback(newFreesoundObject); };
-		
-	}, errorCallback);
-	
+FS.User.prototype.getPacks = function(succesCallback, errorCallback){   
+        
+        var uName = this.properties['username'];
+        
+        //call createGetReq and pass it file uri, file key and callback function
+        FS.RequestCreator.createGetReq(FS._uri(FS._URI_USER_PACKS, [uName]), 
+        function(inProperties)
+        {
+                // Use generic FreesoundObject to handle pack list/collection
+                var newFreesoundObject = new FS.FreesoundObject(inProperties);
+                
+                //call succesCallback method    
+                if($.isFunction(succesCallback)){succesCallback(newFreesoundObject); };
+                
+        }, errorCallback);
+        
 }
 
 
@@ -667,30 +667,30 @@ FS.Pack = function(){this.object = this;};
  */
 
 FS.Pack.getPack = function(pId, succesCallback, errorCallback){
-	
-	//call createGetReq and pass it file uri, file key and callback function
-	FS.RequestCreator.createGetReq(FS._uri(FS._URI_PACK, [pId]), 
-	function(inProperties)
-	{
-				
-		//create a new File object and a new FreesoundObject 
-		var newPack = new FS.Pack();
-		var newFreesoundObject = new FS.FreesoundObject(inProperties);
-		//use jQuery.extend to let newSound inherited from newFreesoundObject
-		$.extend(newPack, newFreesoundObject);	
-		
-		//call succesCallback method	
-		if($.isFunction(succesCallback)){succesCallback(newPack); };
-	}, errorCallback);
+        
+        //call createGetReq and pass it file uri, file key and callback function
+        FS.RequestCreator.createGetReq(FS._uri(FS._URI_PACK, [pId]), 
+        function(inProperties)
+        {
+                                
+                //create a new File object and a new FreesoundObject 
+                var newPack = new FS.Pack();
+                var newFreesoundObject = new FS.FreesoundObject(inProperties);
+                //use jQuery.extend to let newSound inherited from newFreesoundObject
+                $.extend(newPack, newFreesoundObject);  
+                
+                //call succesCallback method    
+                if($.isFunction(succesCallback)){succesCallback(newPack); };
+        }, errorCallback);
 
 }
 
 FS.Pack.prototype.getSounds = function(succesCallback, errorCallback){
-	// TODO: Pack id is not returned in the API, it has to be extracted from the info
-	var pId = this.properties['ref'].split('/');
-	pId = pId[pId.length - 2];
-	
-	FS.SoundCollection.getSoundsFromPack(pId, succesCallback, errorCallback);
+        // TODO: Pack id is not returned in the API, it has to be extracted from the info
+        var pId = this.properties['ref'].split('/');
+        pId = pId[pId.length - 2];
+        
+        FS.SoundCollection.getSoundsFromPack(pId, succesCallback, errorCallback);
 }
 
 /*======================================================================*/
@@ -703,69 +703,69 @@ FS.Pack.prototype.getSounds = function(succesCallback, errorCallback){
  * @returns {Object} { sound, user, pack, soundCollection }. 
  */
 Freesound = function(aKey, useJson){
-	
-	//check if there already exist a object of Freesound class (singleton)
-	if(!Freesound.object)
-	{
-		if (aKey) {
-			
-			//set use of json
-			FS.RequestCreator.setUseJson(useJson);
-				
-			//set api key
-			FS.FreesoundData.setApiKey(aKey); 
-			
-			//getSound function to call FS.Sound.getSound
-			var getSound = function(sId, succesCallback, errorCallback)
-			{	FS.Sound.getSound(sId, succesCallback, errorCallback); };
-			
-			//getUser function to call FS.User.getUser
-			var getUser = function(uId, succesCallback, errorCallback)
-			{	FS.User.getUser(uId, succesCallback, errorCallback); };
-			
-			//getPack function to call FS.Pack.getPack
-			var getPack = function(pId, succesCallback, errorCallback)
-			{	FS.Pack.getPack(pId, succesCallback, errorCallback); };
-			
-			
-			//functions that return sound collections
-			var getSoundsFromQuery = function(query, page, filter, sort, succesCallback, errorCallback)
-			{	FS.SoundCollection.getSoundsFromQuery(query, page, filter, sort, succesCallback, errorCallback); };
-			
-			var getSoundsFromUser = function(uName, succesCallback, errorCallback)
-			{	FS.SoundCollection.getSoundsFromUser(uName, succesCallback, errorCallback); };
-			
-			var getSoundsFromPack = function(pId, succesCallback, errorCallback)
-			{	FS.SoundCollection.getSoundsFromPack(pId, succesCallback, errorCallback); };
-			
-			var getSimilarSoundsFromSound = function(sId, succesCallback, errorCallback)
-			{	FS.SoundCollection.getSimilarSoundsFromSound(sId, succesCallback, errorCallback); };
-			
-			//create Freesound object, containing public variables and methods of Freesound Library						
-			var object = {
-				
-				getApiKey: FS.FreesoundData.getApiKey,
-				getBaseUri: FS.FreesoundData.getBaseUri,
-				
-				getSound: getSound,
-				
-				getUser: getUser,
-				
-				getPack: getPack,
-				
-				getSoundsFromQuery: getSoundsFromQuery,
-				getSoundsFromUser: getSoundsFromUser,
-				getSoundsFromPack: getSoundsFromPack,
-				getSimilarSoundsFromSound: getSimilarSoundsFromSound,
-				
-				setTimeout: FS.RequestCreator.setTimeout
-			};
-		}
-		//no correct api key passed -> throw error
-		else {throw "you didn't pass a api_key to constructor Freesound"; }
-	}
-	
-	
-	//return object of Freesound class
-	return object;	
+        
+        //check if there already exist a object of Freesound class (singleton)
+        if(!Freesound.object)
+        {
+                if (aKey) {
+                        
+                        //set use of json
+                        FS.RequestCreator.setUseJson(useJson);
+                                
+                        //set api key
+                        FS.FreesoundData.setApiKey(aKey); 
+                        
+                        //getSound function to call FS.Sound.getSound
+                        var getSound = function(sId, succesCallback, errorCallback)
+                        {       FS.Sound.getSound(sId, succesCallback, errorCallback); };
+                        
+                        //getUser function to call FS.User.getUser
+                        var getUser = function(uId, succesCallback, errorCallback)
+                        {       FS.User.getUser(uId, succesCallback, errorCallback); };
+                        
+                        //getPack function to call FS.Pack.getPack
+                        var getPack = function(pId, succesCallback, errorCallback)
+                        {       FS.Pack.getPack(pId, succesCallback, errorCallback); };
+                        
+                        
+                        //functions that return sound collections
+                        var getSoundsFromQuery = function(query, page, filter, sort, succesCallback, errorCallback)
+                        {       FS.SoundCollection.getSoundsFromQuery(query, page, filter, sort, succesCallback, errorCallback); };
+                        
+                        var getSoundsFromUser = function(uName, succesCallback, errorCallback)
+                        {       FS.SoundCollection.getSoundsFromUser(uName, succesCallback, errorCallback); };
+                        
+                        var getSoundsFromPack = function(pId, succesCallback, errorCallback)
+                        {       FS.SoundCollection.getSoundsFromPack(pId, succesCallback, errorCallback); };
+                        
+                        var getSimilarSoundsFromSound = function(sId, numSounds, preset, succesCallback, errorCallback)
+                        {       FS.SoundCollection.getSimilarSoundsFromSound(sId, numSounds, preset, succesCallback, errorCallback); };
+                        
+                        //create Freesound object, containing public variables and methods of Freesound Library                                         
+                        var object = {
+                                
+                                getApiKey: FS.FreesoundData.getApiKey,
+                                getBaseUri: FS.FreesoundData.getBaseUri,
+                                
+                                getSound: getSound,
+                                
+                                getUser: getUser,
+                                
+                                getPack: getPack,
+                                
+                                getSoundsFromQuery: getSoundsFromQuery,
+                                getSoundsFromUser: getSoundsFromUser,
+                                getSoundsFromPack: getSoundsFromPack,
+                                getSimilarSoundsFromSound: getSimilarSoundsFromSound,
+                                
+                                setTimeout: FS.RequestCreator.setTimeout
+                        };
+                }
+                //no correct api key passed -> throw error
+                else {throw "you didn't pass a api_key to constructor Freesound"; }
+        }
+        
+        
+        //return object of Freesound class
+        return object;  
 }
