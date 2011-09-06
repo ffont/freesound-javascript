@@ -90,7 +90,7 @@ var FS = new function()
  */
 FS.FreesoundData = function(){};
 FS.FreesoundData.apiKey = false;
-FS.FreesoundData.baseUri = 'http://beta.freesound.org/api';
+FS.FreesoundData.baseUri = 'http://www.freesound.org/api';
 
 /**
  * Set Api key method, checks if handed api_key exists and saves this to FreesoundData.api_key
